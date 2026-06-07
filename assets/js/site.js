@@ -16,6 +16,16 @@ const progress = document.createElement('div');
 progress.className = 'progress-bar';
 document.body.prepend(progress);
 
+const pageTransition = document.createElement('div');
+pageTransition.className = 'page-transition';
+document.body.appendChild(pageTransition);
+
+const meteorLayer = document.createElement('div');
+meteorLayer.className = 'meteor-layer';
+meteorLayer.setAttribute('aria-hidden', 'true');
+meteorLayer.innerHTML = '<i></i><i></i><i></i><i></i>';
+document.body.appendChild(meteorLayer);
+
 function setPointerVars(x, y) {
   pointerX = x;
   pointerY = y;
@@ -28,6 +38,22 @@ function setPointerVars(x, y) {
 }
 
 setPointerVars(pointerX, pointerY);
+
+if (document.body.classList.contains('page-atlas')) {
+  let pendingPointerEvent = null;
+  let pointerFrame = 0;
+
+  document.addEventListener('pointermove', (event) => {
+    pendingPointerEvent = event;
+    if (pointerFrame) return;
+    pointerFrame = requestAnimationFrame(() => {
+      pointerFrame = 0;
+      if (pendingPointerEvent) {
+        setPointerVars(pendingPointerEvent.clientX, pendingPointerEvent.clientY);
+      }
+    });
+  }, { passive: true });
+}
 
 if (starCanvas) {
   starCanvas.remove();
@@ -166,6 +192,7 @@ if (atlasViewport && atlasMap) {
   let startAtlasY = 0;
   let dragging = false;
   let moved = false;
+  let suppressClick = false;
 
   function clampAtlas() {
     const view = atlasViewport.getBoundingClientRect();
@@ -205,12 +232,16 @@ if (atlasViewport && atlasMap) {
     dragging = false;
     atlasViewport.classList.remove('is-dragging');
     atlasViewport.releasePointerCapture?.(event.pointerId);
+    suppressClick = moved;
+    window.setTimeout(() => {
+      suppressClick = false;
+    }, 80);
   }
 
   atlasViewport.addEventListener('pointerup', endAtlasDrag);
   atlasViewport.addEventListener('pointercancel', endAtlasDrag);
   atlasViewport.addEventListener('click', (event) => {
-    if (moved) {
+    if (suppressClick) {
       event.preventDefault();
       event.stopPropagation();
     }
@@ -219,6 +250,24 @@ if (atlasViewport && atlasMap) {
   window.addEventListener('resize', clampAtlas);
   clampAtlas();
 }
+
+document.addEventListener('click', (event) => {
+  const link = event.target.closest('a[href]');
+  if (!link || event.defaultPrevented) return;
+  const href = link.getAttribute('href');
+  if (!href || href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('tel:') || link.target) return;
+  const url = new URL(href, location.href);
+  if (url.origin !== location.origin || url.pathname === location.pathname && url.hash) return;
+  event.preventDefault();
+  pageTransition.classList.remove('transition-up', 'transition-diagonal');
+  const variants = ['', 'transition-up', 'transition-diagonal'];
+  const variant = variants[Math.floor(Math.random() * variants.length)];
+  if (variant) pageTransition.classList.add(variant);
+  pageTransition.classList.add('is-active');
+  window.setTimeout(() => {
+    location.href = url.href;
+  }, 220);
+});
 
 const lightbox = document.createElement('div');
 lightbox.className = 'lightbox';

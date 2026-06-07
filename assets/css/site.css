@@ -2237,6 +2237,32 @@ th {
   background: linear-gradient(90deg, var(--cyan), var(--gold), var(--coral));
   box-shadow: 0 0 18px rgba(70,225,255,.6);
 }
+.page-transition {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  pointer-events: none;
+  transform: translateX(-110%);
+  background:
+    linear-gradient(90deg, rgba(70,225,255,.92), rgba(255,202,98,.95)),
+    #07101c;
+  transition: transform .26s ease;
+}
+.page-transition.is-active {
+  transform: translateX(0);
+}
+.page-transition.transition-up {
+  transform: translateY(110%);
+}
+.page-transition.transition-up.is-active {
+  transform: translateY(0);
+}
+.page-transition.transition-diagonal {
+  transform: translate3d(-110%, 110%, 0) rotate(-8deg) scale(1.2);
+}
+.page-transition.transition-diagonal.is-active {
+  transform: translate3d(0, 0, 0) rotate(0) scale(1.2);
+}
 
 @keyframes orbitPulse {
   0%, 100% { transform: scale(1); opacity: .78; }
@@ -2580,6 +2606,40 @@ th {
 .main-constellation .major-star {
   fill: var(--gold);
 }
+.milky-river .river-glow {
+  fill: none;
+  stroke: rgba(126, 210, 255, .16);
+  stroke-width: 96;
+  stroke-linecap: round;
+}
+.milky-river .river-core {
+  fill: none;
+  stroke: rgba(220, 247, 255, .22);
+  stroke-width: 34;
+  stroke-linecap: round;
+  stroke-dasharray: 5 13;
+}
+.milky-river text {
+  fill: rgba(207, 236, 255, .76);
+  font-size: 20px;
+  font-weight: 1000;
+  letter-spacing: .18em;
+}
+.main-constellation text {
+  fill: rgba(255, 236, 184, .82);
+  font-size: 18px;
+  font-weight: 1000;
+  letter-spacing: .08em;
+}
+.milky-river .child-star {
+  fill: #fff8c8;
+  stroke: rgba(255, 202, 98, .9);
+  stroke-width: 2;
+}
+.main-constellation .child-label {
+  font-size: 15px;
+  fill: rgba(255, 236, 184, .76);
+}
 .atlas-hotspot {
   position: absolute;
   left: var(--x);
@@ -2600,6 +2660,25 @@ th {
   border-radius: 50%;
   background: radial-gradient(circle, rgba(255,202,98,.1), transparent 64%);
 }
+.atlas-hotspot::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 320px;
+  height: 260px;
+  transform: translate(-50%, -50%);
+  border-radius: 18px;
+  background: transparent;
+}
+.solar-hotspot::after {
+  height: 430px;
+}
+.lyra-hotspot::after,
+.aquila-hotspot::after {
+  width: 360px;
+  height: 270px;
+}
 .atlas-label {
   position: absolute;
   left: 50%;
@@ -2611,6 +2690,7 @@ th {
   padding: 12px 14px;
   border: 1px solid rgba(255,255,255,.16);
   background: rgba(4, 9, 18, .84);
+  pointer-events: auto;
 }
 .atlas-label em {
   color: rgba(197,225,243,.74);
@@ -2713,6 +2793,63 @@ th {
   font-weight: 900;
   background: linear-gradient(180deg, transparent, rgba(3,7,14,.92));
 }
+.page-atlas .star-atlas-viewport::before,
+.page-atlas .star-atlas-viewport::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  z-index: 3;
+}
+.page-atlas .star-atlas-viewport::before {
+  left: var(--mouse-x);
+  top: var(--mouse-y);
+  width: 220px;
+  height: 220px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,255,255,.12), rgba(70,225,255,.08) 32%, transparent 68%);
+  opacity: .72;
+}
+.page-atlas .star-atlas-viewport::after {
+  left: 8%;
+  top: 12%;
+  width: 160px;
+  height: 2px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.9), transparent);
+  transform: rotate(24deg);
+  animation: meteorSlide 6s linear infinite;
+}
+@keyframes meteorSlide {
+  0% { transform: translate3d(-20vw, -10vh, 0) rotate(24deg); opacity: 0; }
+  12% { opacity: .85; }
+  34% { opacity: 0; }
+  100% { transform: translate3d(80vw, 42vh, 0) rotate(24deg); opacity: 0; }
+}
+body::marker {
+  color: var(--gold);
+}
+body .meteor-layer {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+}
+body .meteor-layer i {
+  position: absolute;
+  width: 140px;
+  height: 2px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.82), rgba(70,225,255,.18));
+  transform: rotate(24deg);
+  opacity: 0;
+  animation: meteorSlide 7s linear infinite;
+}
+body .meteor-layer i:nth-child(1) { left: 2%; top: 8%; animation-delay: .2s; }
+body .meteor-layer i:nth-child(2) { left: 38%; top: 22%; animation-delay: 2.4s; }
+body .meteor-layer i:nth-child(3) { left: 70%; top: 12%; animation-delay: 4.8s; }
+body .meteor-layer i:nth-child(4) { left: 16%; top: 58%; animation-delay: 6.1s; }
 
 @media (max-width: 980px) {
   .atlas-title h1 { font-size: 44px; }
@@ -2731,6 +2868,9 @@ th {
   .atlas-label { min-width: 190px; }
   .atlas-label strong { font-size: 22px; }
   .reflection-visual-grid { grid-template-columns: 1fr; }
+  .page-atlas .star-atlas-viewport::before {
+    display: none;
+  }
 }
 
 .cosmic-glow,
