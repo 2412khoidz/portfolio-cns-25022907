@@ -207,6 +207,7 @@ if (atlasViewport && atlasMap) {
 
   atlasViewport.addEventListener('pointerdown', (event) => {
     if (event.button !== 0) return;
+    if (event.target.closest('.atlas-hotspot')) return;
     dragging = true;
     moved = false;
     startX = event.clientX;
@@ -241,6 +242,11 @@ if (atlasViewport && atlasMap) {
   atlasViewport.addEventListener('pointerup', endAtlasDrag);
   atlasViewport.addEventListener('pointercancel', endAtlasDrag);
   atlasViewport.addEventListener('click', (event) => {
+    if (event.target.closest('.atlas-hotspot')) {
+      moved = false;
+      suppressClick = false;
+      return;
+    }
     if (suppressClick) {
       event.preventDefault();
       event.stopPropagation();
@@ -251,6 +257,25 @@ if (atlasViewport && atlasMap) {
   clampAtlas();
 }
 
+document.querySelectorAll('.atlas-hotspot').forEach((hotspot) => {
+  let downX = 0;
+  let downY = 0;
+
+  hotspot.addEventListener('pointerdown', (event) => {
+    downX = event.clientX;
+    downY = event.clientY;
+  });
+
+  hotspot.addEventListener('pointerup', (event) => {
+    const movedOnLink = Math.abs(event.clientX - downX) + Math.abs(event.clientY - downY) > 10;
+    if (movedOnLink) return;
+    event.preventDefault();
+    const href = hotspot.getAttribute('href');
+    if (!href) return;
+    goWithTransition(new URL(href, location.href));
+  });
+});
+
 document.addEventListener('click', (event) => {
   const link = event.target.closest('a[href]');
   if (!link || event.defaultPrevented) return;
@@ -259,15 +284,19 @@ document.addEventListener('click', (event) => {
   const url = new URL(href, location.href);
   if (url.origin !== location.origin || url.pathname === location.pathname && url.hash) return;
   event.preventDefault();
+  goWithTransition(url);
+});
+
+function goWithTransition(url) {
   pageTransition.classList.remove('transition-up', 'transition-diagonal');
-  const variants = ['', 'transition-up', 'transition-diagonal'];
-  const variant = variants[Math.floor(Math.random() * variants.length)];
+  const path = url.pathname.toLowerCase();
+  const variant = path.includes('about') ? 'transition-up' : path.includes('conclusion') ? 'transition-diagonal' : '';
   if (variant) pageTransition.classList.add(variant);
   pageTransition.classList.add('is-active');
   window.setTimeout(() => {
     location.href = url.href;
   }, 220);
-});
+}
 
 const lightbox = document.createElement('div');
 lightbox.className = 'lightbox';

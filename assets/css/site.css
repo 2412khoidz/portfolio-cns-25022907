@@ -2647,6 +2647,9 @@ th {
   transform: translate(-50%, -50%);
   color: #fff;
   text-decoration: none;
+  z-index: 6;
+  cursor: pointer;
+  touch-action: manipulation;
 }
 .atlas-hotspot::before {
   content: "";
@@ -2690,7 +2693,7 @@ th {
   padding: 12px 14px;
   border: 1px solid rgba(255,255,255,.16);
   background: rgba(4, 9, 18, .84);
-  pointer-events: auto;
+  pointer-events: none;
 }
 .atlas-label em {
   color: rgba(197,225,243,.74);
