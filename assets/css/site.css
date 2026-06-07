@@ -348,6 +348,499 @@ mark[data-search-mark] {
 main {
   min-height: 100vh;
 }
+
+.page-home .cosmos-scene {
+  background:
+    radial-gradient(circle at 74% 14%, rgba(255,255,255,.14), transparent 2px),
+    radial-gradient(circle at 16% 18%, rgba(255,255,255,.2), transparent 2px),
+    radial-gradient(circle at 88% 58%, rgba(255,255,255,.18), transparent 2px),
+    radial-gradient(circle at 42% 76%, rgba(255,255,255,.16), transparent 2px),
+    radial-gradient(ellipse at 68% 78%, rgba(70,225,255,.2), transparent 34%),
+    radial-gradient(ellipse at 28% 24%, rgba(83,116,255,.16), transparent 28%),
+    linear-gradient(135deg, #03060d, #081324 48%, #160d1e);
+}
+.page-home .cosmos-scene::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(circle, rgba(255,255,255,.78) 0 1px, transparent 1.8px),
+    radial-gradient(circle, rgba(123,204,255,.75) 0 1px, transparent 1.8px),
+    radial-gradient(circle, rgba(255,232,180,.75) 0 1px, transparent 1.8px);
+  background-size: 96px 84px, 150px 132px, 220px 190px;
+  background-position: 8px 18px, 54px 30px, 88px 72px;
+  opacity: .72;
+}
+.page-home .cosmos-scene::after {
+  content: none;
+}
+.page-home::before,
+.page-home::after {
+  display: none;
+}
+.page-home .cosmic-glow,
+.page-home .cursor-comet {
+  display: none;
+}
+.constellation-home {
+  position: relative;
+  min-height: 100vh;
+  display: grid;
+  align-content: center;
+  gap: clamp(28px, 5vw, 58px);
+  padding: 116px clamp(18px, 5vw, 76px) 64px;
+  overflow: hidden;
+}
+.constellation-home::before {
+  content: "";
+  position: absolute;
+  right: -10vw;
+  top: 12vh;
+  width: min(42vw, 620px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 30% 26%, rgba(255,255,255,.09), transparent 16%),
+    radial-gradient(circle at 50% 50%, #151922, #020306 72%);
+  box-shadow: inset -34px -38px 68px rgba(0,0,0,.9);
+  opacity: .78;
+}
+.constellation-titlebar {
+  position: relative;
+  z-index: 2;
+  max-width: 1180px;
+  margin: 0 auto;
+  width: 100%;
+}
+.constellation-titlebar p {
+  margin: 0 0 14px;
+  color: var(--gold);
+  font-size: 13px;
+  font-weight: 1000;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+.constellation-titlebar h1 {
+  margin: 0;
+  color: #fff;
+  font-size: 76px;
+  line-height: .9;
+  letter-spacing: 0;
+  text-transform: uppercase;
+  text-shadow: 0 26px 70px rgba(0,0,0,.62);
+}
+.constellation-titlebar span {
+  display: inline-flex;
+  margin-top: 18px;
+  color: var(--soft);
+  font-size: 18px;
+  font-weight: 900;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+.constellation-menu {
+  position: relative;
+  z-index: 2;
+  width: min(1180px, 100%);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+.constellation-choice {
+  position: relative;
+  min-height: 440px;
+  display: grid;
+  grid-template-rows: 1fr auto auto auto;
+  align-items: end;
+  gap: 8px;
+  padding: 24px;
+  color: #fff;
+  text-decoration: none;
+  border: 1px solid rgba(158,236,255,.22);
+  background:
+    radial-gradient(circle at 50% 32%, rgba(255,255,255,.08), transparent 24%),
+    linear-gradient(180deg, rgba(6,12,24,.5), rgba(5,9,18,.9));
+  box-shadow: 0 20px 54px rgba(0,0,0,.38);
+  overflow: hidden;
+  transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
+}
+.constellation-choice::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(circle, rgba(255,255,255,.95) 0 1px, transparent 1.8px),
+    radial-gradient(circle, rgba(126,205,255,.72) 0 1px, transparent 1.8px);
+  background-size: 86px 72px, 134px 116px;
+  background-position: 12px 20px, 38px 56px;
+  opacity: .4;
+}
+.constellation-choice::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0;
+  height: 46%;
+  background: linear-gradient(180deg, transparent, rgba(2,5,12,.94));
+}
+.constellation-choice:hover,
+.constellation-choice:focus-visible {
+  transform: translateY(-6px);
+  border-color: rgba(255,202,98,.56);
+  box-shadow: 0 24px 70px rgba(0,0,0,.48);
+}
+.constellation-svg {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  align-self: center;
+  justify-self: center;
+}
+.constellation-svg path {
+  fill: none;
+  stroke: rgba(202,235,255,.58);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.constellation-svg circle {
+  fill: #fff;
+  stroke: rgba(121,220,255,.72);
+  stroke-width: 2;
+}
+.orion-choice .constellation-svg circle:nth-of-type(7),
+.lyra-choice .constellation-svg circle:nth-of-type(1),
+.cygnus-choice .constellation-svg circle:nth-of-type(3) {
+  fill: var(--gold);
+  stroke: rgba(255,239,180,.95);
+}
+.constellation-choice span,
+.constellation-choice strong,
+.constellation-choice small {
+  position: relative;
+  z-index: 2;
+}
+.constellation-choice span {
+  color: var(--gold);
+  font-size: 13px;
+  font-weight: 1000;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+}
+.constellation-choice strong {
+  font-size: 34px;
+  line-height: 1;
+  text-transform: uppercase;
+}
+.constellation-choice small {
+  color: var(--soft);
+  font-size: 16px;
+  font-weight: 800;
+}
+
+.page-home {
+  background:
+    radial-gradient(circle at var(--mouse-x) var(--mouse-y), rgba(83, 209, 255, .26), transparent 24vw),
+    radial-gradient(circle at 76% 24%, rgba(255, 202, 98, .16), transparent 32vw),
+    radial-gradient(circle at 20% 70%, rgba(255, 111, 159, .12), transparent 30vw),
+    #03050b;
+}
+.home-hero {
+  position: relative;
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: minmax(320px, .82fr) minmax(430px, 1.18fr);
+  gap: clamp(32px, 5vw, 82px);
+  align-items: center;
+  padding: 124px clamp(20px, 5vw, 76px) 72px;
+  overflow: hidden;
+  border-bottom: 1px solid rgba(158,236,255,.2);
+  background:
+    linear-gradient(rgba(255,255,255,.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.045) 1px, transparent 1px),
+    radial-gradient(ellipse at 65% 45%, rgba(41, 100, 177, .32), transparent 44%),
+    radial-gradient(ellipse at 38% 64%, rgba(255, 202, 98, .1), transparent 34%),
+    #03050b;
+  background-size: 56px 56px, 56px 56px, auto, auto, auto;
+}
+.home-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, rgba(3,5,11,.9), rgba(3,5,11,.36) 48%, rgba(3,5,11,.1)),
+    url("../planets/2k_stars_milky_way.jpg") center / cover;
+  opacity: .7;
+  mix-blend-mode: screen;
+}
+.home-hero::after {
+  content: "";
+  position: absolute;
+  right: -8vw;
+  top: 11vh;
+  width: min(42vw, 620px);
+  aspect-ratio: 1;
+  border-radius: 48% 52% 46% 54%;
+  background:
+    radial-gradient(circle at 28% 24%, rgba(255,255,255,.16), transparent 14%),
+    radial-gradient(circle at 72% 68%, rgba(255,255,255,.08), transparent 18%),
+    radial-gradient(circle at 50% 50%, #151820, #020205 72%);
+  box-shadow:
+    inset -42px -50px 90px rgba(0,0,0,.9),
+    inset 18px 18px 44px rgba(255,255,255,.08),
+    0 0 90px rgba(70,225,255,.1);
+  filter: saturate(.9);
+  transform: translate3d(calc(var(--hero-drift-x) * -.42), calc(var(--hero-drift-y) * -.28), 0) rotate(-8deg);
+}
+.home-galaxy-canvas {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+.home-hero-copy,
+.constellation-map,
+.home-signature {
+  position: relative;
+  z-index: 3;
+}
+.home-hero-copy {
+  max-width: 860px;
+}
+.home-kicker {
+  margin: 0 0 18px;
+  color: var(--gold);
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+}
+.home-hero h1 {
+  margin: 0;
+  color: #fff;
+  font-size: 94px;
+  line-height: .84;
+  letter-spacing: 0;
+  text-transform: uppercase;
+  text-wrap: balance;
+  text-shadow: 0 28px 70px rgba(0,0,0,.7);
+}
+.home-lead {
+  max-width: 720px;
+  margin: 26px 0 0;
+  color: var(--soft);
+  font-size: 22px;
+}
+.home-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 30px;
+}
+.ghost-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 46px;
+  padding: 0 18px;
+  border: 1px solid rgba(255,255,255,.16);
+  color: var(--soft);
+  background: rgba(255,255,255,.045);
+  text-decoration: none;
+  font-weight: 900;
+}
+.ghost-link:hover {
+  color: #fff;
+  border-color: rgba(70,225,255,.5);
+  box-shadow: 0 0 28px rgba(70,225,255,.14);
+}
+.constellation-map {
+  min-height: min(66vh, 680px);
+  height: clamp(520px, 58vw, 720px);
+  border: 1px solid rgba(158,236,255,.2);
+  background:
+    radial-gradient(circle at var(--mouse-x) var(--mouse-y), rgba(70,225,255,.12), transparent 22%),
+    radial-gradient(circle at 49% 47%, rgba(255,202,98,.14), transparent 14%),
+    radial-gradient(circle at 74% 32%, rgba(255,111,159,.12), transparent 18%),
+    rgba(5, 9, 19, .55);
+  box-shadow: 0 34px 120px rgba(0,0,0,.58), inset 0 0 90px rgba(255,255,255,.04);
+  overflow: hidden;
+  isolation: isolate;
+}
+.constellation-map::before,
+.constellation-map::after {
+  content: "";
+  position: absolute;
+  inset: 8%;
+  z-index: -1;
+  border: 1px solid rgba(255,255,255,.13);
+  border-radius: 50%;
+  transform: rotate(-15deg) scaleX(1.42);
+  box-shadow:
+    0 0 0 80px rgba(255,255,255,.026),
+    0 0 0 160px rgba(70,225,255,.02),
+    0 0 0 240px rgba(255,202,98,.016);
+}
+.constellation-map::after {
+  inset: 23% 16%;
+  opacity: .52;
+  transform: rotate(14deg) scaleX(1.72);
+}
+.constellation-node {
+  position: absolute;
+  display: grid;
+  justify-items: center;
+  gap: 10px;
+  width: min(230px, 32vw);
+  color: #fff;
+  text-align: center;
+  text-decoration: none;
+  transform: translate(-50%, -50%);
+  text-shadow: 0 4px 16px rgba(0,0,0,.92);
+  transition: transform .24s ease, filter .24s ease;
+}
+.constellation-node::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 170%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.5), transparent);
+  transform: translate(-50%, -50%) rotate(var(--line-angle, 0deg));
+  opacity: .5;
+  z-index: -1;
+}
+.constellation-node strong {
+  font-size: 22px;
+  line-height: 1.05;
+  font-weight: 1000;
+}
+.constellation-node small {
+  color: var(--gold);
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+.constellation-node:hover,
+.constellation-node:focus-visible {
+  transform: translate(-50%, -50%) scale(1.06);
+  filter: drop-shadow(0 0 26px rgba(70,225,255,.44));
+}
+.node-projects { left: 48%; top: 50%; --line-angle: -8deg; }
+.node-about { left: 22%; top: 28%; --line-angle: 24deg; }
+.node-conclusion { left: 76%; top: 72%; --line-angle: -34deg; }
+.star-system {
+  position: relative;
+  display: block;
+  width: clamp(104px, 13vw, 170px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+}
+.star-system::before {
+  content: "";
+  position: absolute;
+  inset: 12%;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 28%, #fff7bd, #ffba3d 45%, #f36b28 86%);
+  box-shadow: 0 0 42px rgba(255,202,98,.58), 0 0 86px rgba(255,98,34,.26);
+}
+.star-system::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 1px solid rgba(255,255,255,.24);
+  border-radius: 50%;
+  transform: rotate(-18deg) scaleX(1.55);
+  opacity: .72;
+}
+.star-system i {
+  position: absolute;
+  width: 14%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 25%, #fff, var(--cyan) 38%, #1e58a8 100%);
+  box-shadow: inset -7px -8px 12px rgba(0,0,0,.45), 0 0 18px rgba(70,225,255,.34);
+}
+.star-system i:nth-child(1) { left: 9%; top: 47%; }
+.star-system i:nth-child(2) { right: 12%; top: 28%; background: radial-gradient(circle at 30% 25%, #fff, #ffca62 42%, #8f4c21 100%); }
+.star-system i:nth-child(3) { right: 24%; bottom: 8%; background: radial-gradient(circle at 30% 25%, #fff, #7de6ff 40%, #1d7c7d 100%); }
+.star-system i:nth-child(4) { left: 28%; top: 8%; background: radial-gradient(circle at 30% 25%, #fff, #ff8a65 40%, #8a2617 100%); }
+.profile-system-node::before {
+  background: radial-gradient(circle at 35% 26%, #fff, #7ee7ff 36%, #1f4d9c 100%);
+}
+.profile-system-node::after {
+  border-color: rgba(70,225,255,.55);
+  transform: rotate(22deg) scaleX(1.42);
+}
+.conclusion-system-node::before {
+  background: radial-gradient(circle at 35% 26%, #fff8cf, #ffca62 38%, #ff6f9f 100%);
+}
+.conclusion-system-node::after {
+  border-color: rgba(255,202,98,.48);
+  transform: rotate(-34deg) scaleX(1.62);
+}
+.home-signature {
+  position: absolute;
+  left: clamp(20px, 5vw, 76px);
+  right: clamp(20px, 5vw, 76px);
+  bottom: 22px;
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  color: rgba(237,247,255,.62);
+  font-weight: 900;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+}
+.home-overview {
+  background: linear-gradient(180deg, rgba(255,255,255,.025), rgba(255,255,255,.01));
+}
+.home-card-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+.home-card {
+  min-height: 430px;
+  display: grid;
+  grid-template-rows: 1fr auto auto;
+  border: 1px solid rgba(158,236,255,.2);
+  color: inherit;
+  background: rgba(8, 15, 29, .7);
+  text-decoration: none;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  transition: transform .24s ease, border-color .24s ease;
+}
+.home-card:hover,
+.home-card:focus-visible {
+  transform: translateY(-6px);
+  border-color: rgba(70,225,255,.52);
+}
+.home-card img {
+  width: 100%;
+  height: 260px;
+  object-fit: cover;
+  filter: saturate(1.08) contrast(1.04);
+}
+.home-card span {
+  padding: 22px 22px 0;
+  color: #fff;
+  font-size: 28px;
+  font-weight: 1000;
+  text-transform: uppercase;
+}
+.home-card p {
+  margin: 0;
+  padding: 10px 22px 24px;
+  color: var(--soft);
+}
+
 .hero {
   position: relative;
   min-height: 100vh;
@@ -469,6 +962,84 @@ main {
   border: 1px solid var(--line);
   background: linear-gradient(135deg, rgba(70,225,255,.08), rgba(255,202,98,.04));
   box-shadow: var(--shadow);
+}
+.about-intro-band .narrow {
+  max-width: 1120px;
+  grid-template-columns: minmax(0, 1fr) minmax(300px, 420px);
+  align-items: center;
+}
+.about-intro-band .large-note {
+  margin-top: 18px;
+}
+.about-intro-visual {
+  position: relative;
+  min-height: 360px;
+  display: grid;
+  place-items: center;
+}
+.about-intro-photo {
+  position: absolute;
+  width: 62%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  border: 1px solid rgba(255,255,255,.2);
+  box-shadow: 0 26px 76px rgba(0,0,0,.48), 0 0 0 1px rgba(70,225,255,.14);
+}
+.about-intro-photo.main {
+  left: 4%;
+  top: 8%;
+  z-index: 2;
+  transform: rotate(-4deg);
+}
+.about-intro-photo.secondary {
+  right: 2%;
+  bottom: 6%;
+  z-index: 1;
+  transform: rotate(5deg);
+  filter: saturate(1.04) brightness(.92);
+}
+.about-intro-badge {
+  position: absolute;
+  right: 8%;
+  top: 10%;
+  z-index: 3;
+  width: 108px;
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+  padding: 12px;
+  border: 1px solid rgba(255,255,255,.16);
+  background: rgba(255,255,255,.9);
+  color: #07599a;
+  box-shadow: 0 18px 48px rgba(0,0,0,.36);
+  font-size: 12px;
+  font-weight: 1000;
+}
+.about-intro-badge img {
+  width: 70px;
+  aspect-ratio: 1;
+  object-fit: contain;
+}
+.project-intro-band .narrow {
+  max-width: 1160px;
+  grid-template-columns: minmax(0, .82fr) minmax(320px, .68fr);
+  align-items: center;
+}
+.project-intro-visual {
+  display: grid;
+  grid-template-columns: 1.2fr .8fr;
+  grid-template-rows: repeat(2, 132px);
+  gap: 10px;
+}
+.project-intro-visual img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border: 1px solid rgba(255,255,255,.16);
+  box-shadow: 0 18px 46px rgba(0,0,0,.34);
+}
+.project-intro-visual img:first-child {
+  grid-row: span 2;
 }
 .intro-band p {
   margin: 0;
@@ -973,6 +1544,64 @@ main {
   min-width: 140px;
   font-size: clamp(18px, 2vw, 30px);
   font-weight: 1000;
+}
+.orbit-gallery {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 18px;
+}
+.orbit-gallery a {
+  position: relative;
+  min-height: 210px;
+  display: grid;
+  align-content: end;
+  gap: 4px;
+  overflow: hidden;
+  padding: 18px;
+  color: #fff;
+  text-decoration: none;
+  border: 1px solid rgba(158,236,255,.2);
+  background: rgba(6, 11, 21, .76);
+  box-shadow: 0 24px 70px rgba(0,0,0,.38);
+}
+.orbit-gallery a::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background:
+    linear-gradient(180deg, transparent 18%, rgba(3,7,14,.88)),
+    radial-gradient(circle at var(--mouse-x) var(--mouse-y), rgba(70,225,255,.18), transparent 28%);
+}
+.orbit-gallery img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: saturate(1.05) contrast(1.04);
+  transition: transform .24s ease;
+}
+.orbit-gallery span,
+.orbit-gallery strong {
+  position: relative;
+  z-index: 2;
+}
+.orbit-gallery span {
+  color: var(--gold);
+  font-size: 13px;
+  font-weight: 1000;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+.orbit-gallery strong {
+  font-size: 22px;
+  line-height: 1.1;
+}
+.orbit-gallery a:hover img,
+.orbit-gallery a:focus-visible img {
+  transform: scale(1.06);
 }
 .solar-map::before {
   content: "";
@@ -1618,6 +2247,46 @@ th {
   .desktop-nav { display: none; }
   .menu-button { display: grid; }
   .brand-name { max-width: calc(100vw - 190px); }
+  .constellation-titlebar h1 {
+    font-size: 56px;
+  }
+  .constellation-menu {
+    grid-template-columns: 1fr;
+  }
+  .constellation-choice {
+    min-height: 360px;
+  }
+  .home-hero {
+    grid-template-columns: 1fr;
+    min-height: auto;
+    padding-top: 112px;
+  }
+  .home-hero h1 {
+    font-size: 64px;
+  }
+  .constellation-map {
+    min-height: 560px;
+    height: 620px;
+  }
+  .home-card-grid {
+    grid-template-columns: 1fr;
+  }
+  .about-intro-band .narrow {
+    grid-template-columns: 1fr;
+  }
+  .about-intro-visual {
+    width: min(460px, 100%);
+    margin: 0 auto;
+  }
+  .project-intro-band .narrow {
+    grid-template-columns: 1fr;
+  }
+  .project-intro-visual {
+    grid-template-rows: repeat(2, 118px);
+  }
+  .orbit-gallery {
+    grid-template-columns: 1fr;
+  }
   .hero { min-height: 82vh; }
   .orbit-section {
     grid-template-columns: 1fr;
@@ -1659,6 +2328,79 @@ th {
   }
   .hero h1,
   .compact-hero h1 { font-size: 42px; }
+  .constellation-home {
+    padding: 94px 18px 46px;
+    gap: 24px;
+  }
+  .constellation-titlebar h1 {
+    font-size: 42px;
+  }
+  .constellation-titlebar p {
+    font-size: 11px;
+  }
+  .constellation-titlebar span {
+    font-size: 14px;
+  }
+  .constellation-choice {
+    min-height: 310px;
+    padding: 20px;
+  }
+  .constellation-choice strong {
+    font-size: 26px;
+  }
+  .constellation-choice small {
+    font-size: 14px;
+  }
+  .home-hero {
+    padding: 96px 18px 64px;
+  }
+  .home-hero h1 {
+    font-size: 46px;
+  }
+  .home-lead {
+    font-size: 18px;
+  }
+  .home-signature {
+    position: relative;
+    left: auto;
+    right: auto;
+    bottom: auto;
+    flex-direction: column;
+    margin-top: 22px;
+    font-size: 12px;
+  }
+  .constellation-map {
+    min-height: 540px;
+    height: 560px;
+  }
+  .constellation-node {
+    width: 142px;
+  }
+  .constellation-node strong {
+    font-size: 16px;
+  }
+  .star-system {
+    width: 104px;
+  }
+  .node-projects { left: 50%; top: 49%; }
+  .node-about { left: 32%; top: 22%; }
+  .node-conclusion { left: 68%; top: 78%; }
+  .about-intro-visual {
+    min-height: 320px;
+  }
+  .about-intro-badge {
+    width: 94px;
+  }
+  .project-intro-visual {
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(3, 150px);
+  }
+  .project-intro-visual img:first-child {
+    grid-row: auto;
+  }
+  .orbit-gallery a {
+    min-height: 190px;
+  }
   .intro-band,
   .content-section,
   .project-list,
@@ -1702,4 +2444,296 @@ th {
     transition-duration: .01ms !important;
   }
   .cursor-comet { display: none; }
+}
+
+/* Final lightweight constellation atlas */
+.page-atlas {
+  background: #030711;
+  overflow-x: hidden;
+}
+.page-atlas::before,
+.page-atlas::after {
+  display: none;
+}
+.page-atlas .cosmos-scene {
+  background:
+    radial-gradient(ellipse at 72% 70%, rgba(70,225,255,.14), transparent 34%),
+    radial-gradient(ellipse at 24% 18%, rgba(90,120,255,.14), transparent 28%),
+    linear-gradient(135deg, #03060d, #081322 52%, #150c1d);
+}
+.page-atlas .cosmos-scene::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(circle, rgba(255,255,255,.72) 0 1px, transparent 1.8px),
+    radial-gradient(circle, rgba(128,205,255,.64) 0 1px, transparent 1.8px);
+  background-size: 110px 92px, 180px 148px;
+  background-position: 14px 28px, 68px 52px;
+  opacity: .7;
+}
+.page-atlas .cosmos-scene::after,
+.page-atlas .cosmic-glow,
+.page-atlas .cursor-comet,
+.page-atlas .constellation-home,
+.page-atlas .home-hero,
+.page-atlas .home-overview {
+  display: none;
+}
+.atlas-home {
+  min-height: 100vh;
+  padding: 112px clamp(18px, 4vw, 56px) 44px;
+}
+.atlas-title {
+  max-width: 1260px;
+  margin: 0 auto 24px;
+}
+.atlas-title p {
+  margin: 0 0 10px;
+  color: var(--gold);
+  font-size: 13px;
+  font-weight: 1000;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+.atlas-title h1 {
+  margin: 0;
+  color: #fff;
+  font-size: 58px;
+  line-height: .95;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+.atlas-title span {
+  display: inline-block;
+  margin-top: 10px;
+  color: var(--soft);
+  font-size: 16px;
+  font-weight: 900;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+.star-atlas-viewport {
+  position: relative;
+  max-width: 1260px;
+  height: min(68vh, 680px);
+  min-height: 540px;
+  margin: 0 auto;
+  overflow: hidden;
+  border: 1px solid rgba(158,236,255,.24);
+  background:
+    radial-gradient(ellipse at 54% 46%, rgba(40,95,160,.26), transparent 44%),
+    rgba(3, 7, 16, .72);
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+}
+.star-atlas-viewport.is-dragging {
+  cursor: grabbing;
+}
+.star-atlas-map {
+  --atlas-x: -300px;
+  --atlas-y: -190px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 1800px;
+  height: 1040px;
+  transform: translate3d(var(--atlas-x), var(--atlas-y), 0);
+  will-change: transform;
+}
+.atlas-lines {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.atlas-dust circle {
+  fill: rgba(236,248,255,.72);
+}
+.decor-constellation path,
+.main-constellation path {
+  fill: none;
+  stroke: rgba(200,232,255,.46);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.decor-constellation circle {
+  fill: rgba(235,248,255,.86);
+}
+.decor-constellation text {
+  fill: rgba(197,225,243,.62);
+  font-size: 18px;
+  font-weight: 1000;
+  letter-spacing: .16em;
+}
+.main-constellation path {
+  stroke: rgba(255,232,170,.76);
+  stroke-width: 3;
+}
+.main-constellation circle {
+  fill: #fff;
+  stroke: rgba(255,232,170,.88);
+  stroke-width: 2;
+}
+.main-constellation .major-star {
+  fill: var(--gold);
+}
+.atlas-hotspot {
+  position: absolute;
+  left: var(--x);
+  top: var(--y);
+  transform: translate(-50%, -50%);
+  color: #fff;
+  text-decoration: none;
+}
+.atlas-hotspot::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 220px;
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+  border: 1px solid rgba(255,202,98,.28);
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,202,98,.1), transparent 64%);
+}
+.atlas-label {
+  position: absolute;
+  left: 50%;
+  top: calc(100% + 18px);
+  min-width: 230px;
+  transform: translateX(-50%);
+  display: grid;
+  gap: 3px;
+  padding: 12px 14px;
+  border: 1px solid rgba(255,255,255,.16);
+  background: rgba(4, 9, 18, .84);
+}
+.atlas-label em {
+  color: rgba(197,225,243,.74);
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 1000;
+  letter-spacing: .16em;
+}
+.atlas-label strong {
+  font-size: 28px;
+  line-height: 1;
+  text-transform: uppercase;
+}
+.atlas-label small {
+  color: var(--soft);
+  font-size: 14px;
+  font-weight: 800;
+}
+.atlas-hotspot:hover .atlas-label,
+.atlas-hotspot:focus-visible .atlas-label {
+  border-color: rgba(255,202,98,.5);
+  color: var(--gold);
+}
+.mini-solar {
+  position: relative;
+  display: block;
+  width: 210px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,.16);
+}
+.mini-solar::before,
+.mini-solar::after {
+  content: "";
+  position: absolute;
+  inset: 20%;
+  border: 1px solid rgba(255,255,255,.2);
+  border-radius: 50%;
+  transform: rotate(-18deg) scaleX(1.55);
+}
+.mini-solar::after {
+  inset: 8%;
+  opacity: .54;
+}
+.mini-solar i {
+  position: absolute;
+  display: block;
+  border-radius: 50%;
+}
+.mini-solar .sun {
+  left: 50%;
+  top: 50%;
+  width: 64px;
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle at 36% 28%, #fff2b2, #ffbf37 46%, #e95d1f);
+}
+.mini-solar .p1 { left: 42%; top: 33%; width: 13px; aspect-ratio: 1; background: #aaa; }
+.mini-solar .p2 { left: 62%; top: 38%; width: 18px; aspect-ratio: 1; background: #d6a14e; }
+.mini-solar .p3 { left: 29%; top: 56%; width: 18px; aspect-ratio: 1; background: #52c0ff; }
+.mini-solar .p4 { left: 72%; top: 67%; width: 26px; aspect-ratio: 1; background: #d0b17a; }
+.lyra-hotspot,
+.aquila-hotspot {
+  width: 38px;
+  height: 38px;
+}
+.lyra-hotspot::before,
+.aquila-hotspot::before {
+  width: 170px;
+}
+
+.reflection-visual-grid {
+  margin-top: 28px;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+}
+.reflection-visual-grid figure {
+  margin: 0;
+  min-height: 230px;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(158,236,255,.2);
+  background: rgba(6, 12, 24, .72);
+}
+.reflection-visual-grid img {
+  width: 100%;
+  height: 100%;
+  min-height: 230px;
+  object-fit: cover;
+}
+.reflection-visual-grid figcaption {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: 0;
+  padding: 12px;
+  color: #fff;
+  font-weight: 900;
+  background: linear-gradient(180deg, transparent, rgba(3,7,14,.92));
+}
+
+@media (max-width: 980px) {
+  .atlas-title h1 { font-size: 44px; }
+  .star-atlas-viewport { min-height: 520px; }
+  .reflection-visual-grid { grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 640px) {
+  .atlas-home { padding: 94px 18px 38px; }
+  .atlas-title h1 { font-size: 34px; }
+  .atlas-title p { font-size: 11px; }
+  .star-atlas-viewport {
+    min-height: 510px;
+    height: 58vh;
+  }
+  .atlas-label { min-width: 190px; }
+  .atlas-label strong { font-size: 22px; }
+  .reflection-visual-grid { grid-template-columns: 1fr; }
+}
+
+.cosmic-glow,
+.cursor-comet {
+  display: none !important;
 }

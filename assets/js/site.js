@@ -29,87 +29,8 @@ function setPointerVars(x, y) {
 
 setPointerVars(pointerX, pointerY);
 
-document.addEventListener('pointermove', (event) => {
-  setPointerVars(event.clientX, event.clientY);
-}, { passive: true });
-
 if (starCanvas) {
-  const ctx = starCanvas.getContext('2d');
-  const stars = [];
-  const meteors = [];
-  let lastStarFrame = 0;
-
-  function buildStars() {
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
-    starCanvas.width = Math.floor(window.innerWidth * dpr);
-    starCanvas.height = Math.floor(window.innerHeight * dpr);
-    starCanvas.style.width = `${window.innerWidth}px`;
-    starCanvas.style.height = `${window.innerHeight}px`;
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    stars.length = 0;
-    meteors.length = 0;
-    const count = Math.min(110, Math.max(55, Math.floor(window.innerWidth * window.innerHeight / 26000)));
-    for (let i = 0; i < count; i += 1) {
-      stars.push({
-        x: Math.random() * window.innerWidth,
-        y: Math.random() * window.innerHeight,
-        z: Math.random() * 0.95 + 0.08,
-        r: Math.random() * 1.55 + 0.35,
-        tw: Math.random() * Math.PI * 2
-      });
-    }
-    for (let i = 0; i < 2; i += 1) {
-      meteors.push({
-        x: Math.random() * window.innerWidth,
-        y: Math.random() * window.innerHeight,
-        speed: Math.random() * 0.45 + 0.18,
-        len: Math.random() * 90 + 70,
-        delay: Math.random() * 6000
-      });
-    }
-  }
-
-  function drawStars(time = 0) {
-    if (time - lastStarFrame < 48) {
-      if (!reduceMotion && !hasSolarScene) requestAnimationFrame(drawStars);
-      return;
-    }
-    lastStarFrame = time;
-    ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
-    const dx = (pointerX / Math.max(window.innerWidth, 1) - 0.5) * 30;
-    const dy = (pointerY / Math.max(window.innerHeight, 1) - 0.5) * 30;
-
-    for (const star of stars) {
-      const x = star.x + dx * star.z;
-      const y = star.y + dy * star.z;
-      const pulse = 0.45 + Math.sin(time * 0.0016 + star.tw) * 0.28 + star.z * 0.38;
-      ctx.beginPath();
-      ctx.fillStyle = `rgba(235, 250, 255, ${Math.max(0.18, Math.min(0.92, pulse))})`;
-      ctx.arc(x, y, star.r * (0.7 + star.z), 0, Math.PI * 2);
-      ctx.fill();
-    }
-
-    for (const meteor of meteors) {
-      const travel = ((time + meteor.delay) * meteor.speed) % (window.innerWidth + window.innerHeight);
-      const x = meteor.x + travel;
-      const y = meteor.y + travel * 0.34;
-      const gradient = ctx.createLinearGradient(x, y, x - meteor.len, y - meteor.len * 0.34);
-      gradient.addColorStop(0, 'rgba(255,255,255,.52)');
-      gradient.addColorStop(1, 'rgba(70,225,255,0)');
-      ctx.strokeStyle = gradient;
-      ctx.lineWidth = 1;
-      ctx.beginPath();
-      ctx.moveTo(x, y);
-      ctx.lineTo(x - meteor.len, y - meteor.len * 0.34);
-      ctx.stroke();
-    }
-
-    if (!reduceMotion && !hasSolarScene) requestAnimationFrame(drawStars);
-  }
-
-  buildStars();
-  drawStars();
-  window.addEventListener('resize', buildStars);
+  starCanvas.remove();
 }
 
 function setPageState() {
@@ -233,27 +154,71 @@ document.querySelectorAll('.solar-map:not(.solar-map-3d)').forEach((map) => {
   });
 });
 
-document.addEventListener('pointermove', (event) => {
-  const card = event.target.closest('.project-card, .profile-card, .step-item, .planet');
-  if (!card) return;
-  const rect = card.getBoundingClientRect();
-  const x = ((event.clientX - rect.left) / Math.max(rect.width, 1) - .5) * 8;
-  const y = ((event.clientY - rect.top) / Math.max(rect.height, 1) - .5) * -8;
-  if (card.classList.contains('planet')) {
-    card.style.filter = `drop-shadow(${x}px ${-y}px 18px rgba(70,225,255,.38))`;
-    return;
-  }
-  if (!reduceMotion) {
-    card.style.transform = `perspective(1200px) rotateX(${y}deg) rotateY(${x}deg) translateY(-4px)`;
-  }
-});
+const atlasViewport = document.querySelector('[data-star-atlas]');
+const atlasMap = document.querySelector('[data-star-atlas-map]');
 
-document.addEventListener('pointerout', (event) => {
-  const card = event.target.closest('.project-card, .profile-card, .step-item, .planet');
-  if (!card) return;
-  card.style.transform = '';
-  card.style.filter = '';
-});
+if (atlasViewport && atlasMap) {
+  let atlasX = window.innerWidth <= 700 ? -560 : -300;
+  let atlasY = window.innerWidth <= 700 ? -170 : -190;
+  let startX = 0;
+  let startY = 0;
+  let startAtlasX = 0;
+  let startAtlasY = 0;
+  let dragging = false;
+  let moved = false;
+
+  function clampAtlas() {
+    const view = atlasViewport.getBoundingClientRect();
+    const map = atlasMap.getBoundingClientRect();
+    const minX = Math.min(0, view.width - 1800);
+    const minY = Math.min(0, view.height - 1040);
+    atlasX = Math.max(minX, Math.min(0, atlasX));
+    atlasY = Math.max(minY, Math.min(0, atlasY));
+    atlasMap.style.setProperty('--atlas-x', `${atlasX}px`);
+    atlasMap.style.setProperty('--atlas-y', `${atlasY}px`);
+  }
+
+  atlasViewport.addEventListener('pointerdown', (event) => {
+    if (event.button !== 0) return;
+    dragging = true;
+    moved = false;
+    startX = event.clientX;
+    startY = event.clientY;
+    startAtlasX = atlasX;
+    startAtlasY = atlasY;
+    atlasViewport.classList.add('is-dragging');
+    atlasViewport.setPointerCapture?.(event.pointerId);
+  });
+
+  atlasViewport.addEventListener('pointermove', (event) => {
+    if (!dragging) return;
+    const dx = event.clientX - startX;
+    const dy = event.clientY - startY;
+    if (Math.abs(dx) + Math.abs(dy) > 6) moved = true;
+    atlasX = startAtlasX + dx;
+    atlasY = startAtlasY + dy;
+    clampAtlas();
+  });
+
+  function endAtlasDrag(event) {
+    if (!dragging) return;
+    dragging = false;
+    atlasViewport.classList.remove('is-dragging');
+    atlasViewport.releasePointerCapture?.(event.pointerId);
+  }
+
+  atlasViewport.addEventListener('pointerup', endAtlasDrag);
+  atlasViewport.addEventListener('pointercancel', endAtlasDrag);
+  atlasViewport.addEventListener('click', (event) => {
+    if (moved) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+    moved = false;
+  }, true);
+  window.addEventListener('resize', clampAtlas);
+  clampAtlas();
+}
 
 const lightbox = document.createElement('div');
 lightbox.className = 'lightbox';
