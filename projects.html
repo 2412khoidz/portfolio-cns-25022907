@@ -4,9 +4,14 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Nguyễn Hoàng Minh Khôi - 25022907 - Projects</title>
-  <link rel="stylesheet" href="assets/css/site.css">
+  <link rel="stylesheet" href="assets/css/site.css?v=real-3d-6">
 </head>
-<body>
+<body class="page-projects">
+  <div class="cosmos-scene" aria-hidden="true">
+    <canvas data-starfield></canvas>
+    <div class="cosmic-glow"></div>
+  </div>
+  <div class="cursor-comet" data-cursor-comet aria-hidden="true"></div>
   
 <header class="site-header" data-header>
   <a class="skip-link" href="#main">Chuyển đến nội dung chính</a>
@@ -70,6 +75,21 @@
   <div class="narrow">
     <p>Học phần gồm 7 bài. Mỗi mục bên dưới dẫn đến một trang riêng để xem nội dung, minh họa và tài liệu gốc của bài tập tương ứng.</p>
     <p class="large-note">Projects</p>
+  </div>
+</section>
+<section id="project-orbit" class="orbit-section" aria-label="Hệ mặt trời các bài tập">
+  <div class="solar-map solar-map-3d" data-solar-system aria-label="Hệ mặt trời 3D tương tác">
+    <canvas class="solar-canvas" data-solar-canvas aria-label="Kéo chuột để xoay hệ mặt trời, bấm hành tinh để mở bài"></canvas>
+    <div class="solar-html-labels" aria-hidden="false">
+      <span class="solar-html-label sun-label-3d" data-sun-label>Mặt Trời</span>
+      <a class="solar-html-label" data-planet-label="0" href="bai-1-thao-tac-tep-thu-muc.html"><span>Bài 1</span><small>Sao Thủy</small></a>
+      <a class="solar-html-label" data-planet-label="1" href="bai-2-tim-kiem-danh-gia-thong-tin.html"><span>Bài 2</span><small>Sao Kim</small></a>
+      <a class="solar-html-label" data-planet-label="2" href="bai-3-viet-prompt-hieu-qua.html"><span>Bài 3</span><small>Trái Đất</small></a>
+      <a class="solar-html-label" data-planet-label="3" href="bai-4-hop-tac-truc-tuyen.html"><span>Bài 4</span><small>Sao Hỏa</small></a>
+      <a class="solar-html-label" data-planet-label="4" href="bai-5-ai-sang-tao-noi-dung.html"><span>Bài 5</span><small>Sao Mộc</small></a>
+      <a class="solar-html-label" data-planet-label="5" href="bai-6-ai-co-trach-nhiem.html"><span>Bài 6</span><small>Sao Thổ</small></a>
+      <a class="solar-html-label" data-planet-label="6" href="bai-7-phan-tich-tai-lieu-voi-ai.html"><span>Bài 7</span><small>Sao Thiên Vương</small></a>
+    </div>
   </div>
 </section>
 <section class="project-list">
@@ -158,6 +178,9 @@
   </div>
 </footer>
 
-  <script src="assets/js/site.js"></script>
+  <script src="assets/js/site.js?v=real-3d-6"></script>
+  <script type="module" src="assets/js/solar-system.js?v=real-3d-6"></script>
 </body>
 </html>
+
+
