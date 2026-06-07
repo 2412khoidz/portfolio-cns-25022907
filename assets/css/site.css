@@ -928,6 +928,7 @@ main {
   height: 100%;
   display: block;
   cursor: grab;
+  touch-action: none;
 }
 .solar-map-3d .solar-canvas.is-dragging {
   cursor: grabbing;
