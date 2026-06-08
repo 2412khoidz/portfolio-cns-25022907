@@ -2191,6 +2191,95 @@ th {
   opacity: 1;
   pointer-events: auto;
 }
+
+@media print {
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  html,
+  body {
+    width: auto;
+    min-width: 0;
+    overflow: visible !important;
+    background: #fff !important;
+  }
+
+  body {
+    color: #142033;
+  }
+
+  .site-header,
+  .side-nav,
+  .scrim,
+  .search-popover,
+  .progress-bar,
+  .page-transition,
+  .cursor-aura,
+  .meteor-layer,
+  .lightbox,
+  .close-side,
+  .cosmos-scene {
+    display: none !important;
+  }
+
+  main {
+    overflow: visible !important;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .hero {
+    min-height: 360px;
+    break-after: auto;
+  }
+
+  .atlas-home {
+    min-height: 760px;
+    padding-top: 34px;
+  }
+
+  .star-atlas-viewport {
+    height: 620px;
+    overflow: hidden;
+  }
+
+  .solar-map-3d {
+    height: 620px;
+    min-height: 620px;
+  }
+
+  .content-section,
+  .intro-band,
+  .project-list,
+  .orbit-section,
+  .poster-section {
+    break-before: auto;
+  }
+
+  .project-card,
+  .step-item,
+  .reflection-card,
+  .poster-row,
+  figure,
+  article,
+  table {
+    break-inside: avoid;
+  }
+
+  .site-footer {
+    break-before: auto;
+  }
+}
 .lightbox-inner {
   max-width: min(1100px, 92vw);
   max-height: 88vh;
@@ -2242,13 +2331,45 @@ th {
   inset: 0;
   z-index: 300;
   pointer-events: none;
+  opacity: 0;
   transform: translateX(-110%);
-  background:
-    linear-gradient(90deg, rgba(70,225,255,.92), rgba(255,202,98,.95)),
-    #07101c;
-  transition: transform .26s ease;
+  background: linear-gradient(90deg, rgba(70,225,255,.92), rgba(255,202,98,.95));
+  transition: transform .42s cubic-bezier(.22,.9,.26,1), opacity .28s ease, clip-path .42s cubic-bezier(.22,.9,.26,1);
 }
 .page-transition.is-active {
+  transform: translateX(0);
+  opacity: 1;
+}
+.page-transition::before,
+.page-transition::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.page-transition::before {
+  background:
+    radial-gradient(circle at 40% 50%, rgba(255,255,255,.7), transparent 11%),
+    linear-gradient(90deg, transparent, rgba(255,255,255,.28), transparent);
+  opacity: .68;
+}
+.page-transition::after {
+  background-image:
+    radial-gradient(circle, rgba(255,255,255,.9) 0 1px, transparent 2px),
+    radial-gradient(circle, rgba(255,236,176,.8) 0 1px, transparent 2px);
+  background-size: 90px 64px, 150px 120px;
+  opacity: .42;
+}
+.page-transition.transition-left {
+  transform: translateX(-110%);
+}
+.page-transition.transition-left.is-active {
+  transform: translateX(0);
+}
+.page-transition.transition-right {
+  transform: translateX(110%);
+}
+.page-transition.transition-right.is-active {
   transform: translateX(0);
 }
 .page-transition.transition-up {
@@ -2257,11 +2378,105 @@ th {
 .page-transition.transition-up.is-active {
   transform: translateY(0);
 }
+.page-transition.transition-down {
+  transform: translateY(-110%);
+}
+.page-transition.transition-down.is-active {
+  transform: translateY(0);
+}
 .page-transition.transition-diagonal {
   transform: translate3d(-110%, 110%, 0) rotate(-8deg) scale(1.2);
 }
 .page-transition.transition-diagonal.is-active {
   transform: translate3d(0, 0, 0) rotate(0) scale(1.2);
+}
+.page-transition.transition-burst {
+  transform: scale(.08);
+  opacity: 0;
+  clip-path: circle(0% at var(--mouse-x) var(--mouse-y));
+  background:
+    radial-gradient(circle at var(--mouse-x) var(--mouse-y), #fff, rgba(255,202,98,.96) 18%, rgba(70,225,255,.92) 46%, #07101c 100%);
+}
+.page-transition.transition-burst.is-active {
+  transform: scale(1);
+  opacity: 1;
+  clip-path: circle(150% at var(--mouse-x) var(--mouse-y));
+}
+.page-transition.transition-frost {
+  transform: translateY(-110%);
+  background:
+    radial-gradient(circle at 20% 20%, rgba(255,255,255,.82), transparent 8%),
+    radial-gradient(circle at 78% 26%, rgba(255,255,255,.72), transparent 7%),
+    linear-gradient(180deg, rgba(240,255,255,.98), rgba(116,226,255,.92)),
+    #dff9ff;
+}
+.page-transition.transition-frost::after {
+  background-image:
+    linear-gradient(120deg, transparent 0 46%, rgba(255,255,255,.92) 47% 49%, transparent 50% 100%),
+    linear-gradient(60deg, transparent 0 46%, rgba(220,249,255,.8) 47% 49%, transparent 50% 100%),
+    radial-gradient(circle, rgba(255,255,255,.92) 0 2px, transparent 3px);
+  background-size: 72px 72px, 52px 52px, 18px 18px;
+  opacity: .88;
+  animation: frostCrack 1.2s linear infinite;
+}
+.page-transition.transition-frost.is-active {
+  transform: translateY(0);
+}
+.page-transition.transition-fire {
+  transform: translateY(110%);
+  background:
+    radial-gradient(circle at 50% 110%, rgba(255,255,255,.9), transparent 10%),
+    radial-gradient(circle at 50% 100%, rgba(255,170,74,.72), transparent 18%),
+    linear-gradient(0deg, #5e1200, #ff7111 34%, #ffb03a 60%, #fff4a9 82%);
+}
+.page-transition.transition-fire::after {
+  background:
+    radial-gradient(ellipse at 18% 92%, rgba(255,232,170,.92), transparent 18%),
+    radial-gradient(ellipse at 54% 96%, rgba(255,255,255,.82), transparent 22%),
+    radial-gradient(ellipse at 84% 94%, rgba(255,170,74,.88), transparent 18%),
+    linear-gradient(0deg, transparent 0 54%, rgba(255,255,255,.42) 55% 57%, transparent 58% 100%);
+  opacity: .88;
+  animation: fireFlicker .7s ease-in-out infinite;
+}
+.page-transition.transition-fire.is-active {
+  transform: translateY(0);
+}
+.page-transition.transition-meteor {
+  transform: translateX(-112%) skewX(-10deg);
+  background:
+    linear-gradient(90deg, transparent, rgba(255,255,255,.95) 20%, rgba(70,225,255,.92) 34%, rgba(255,202,98,.96) 64%, transparent);
+}
+.page-transition.transition-meteor::before {
+  background: linear-gradient(90deg, transparent, #fff, transparent);
+}
+.page-transition.transition-meteor.is-active {
+  transform: translateX(0) skewX(-10deg);
+}
+
+.cursor-aura {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 250;
+  width: 76px;
+  height: 76px;
+  pointer-events: none;
+  border: 1px solid rgba(210, 244, 255, .58);
+  border-radius: 50%;
+  opacity: 0;
+  transform: translate3d(-120px, -120px, 0);
+  transition: opacity .18s ease;
+  mix-blend-mode: screen;
+}
+.cursor-aura::before {
+  content: "";
+  position: absolute;
+  inset: 12px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,255,255,.18), rgba(70,225,255,.1) 42%, transparent 70%);
+}
+.cursor-aura.is-active {
+  opacity: .72;
 }
 
 @keyframes orbitPulse {
@@ -2619,6 +2834,13 @@ th {
   stroke-linecap: round;
   stroke-dasharray: 5 13;
 }
+.milky-river .magpie-bridge {
+  fill: none;
+  stroke: rgba(255, 232, 170, .64);
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-dasharray: 2 10;
+}
 .milky-river text {
   fill: rgba(207, 236, 255, .76);
   font-size: 20px;
@@ -2631,10 +2853,11 @@ th {
   font-weight: 1000;
   letter-spacing: .08em;
 }
-.milky-river .child-star {
-  fill: #fff8c8;
-  stroke: rgba(255, 202, 98, .9);
-  stroke-width: 2;
+.milky-river .bridge-note {
+  fill: rgba(255, 232, 170, .78);
+  font-size: 13px;
+  font-weight: 1000;
+  letter-spacing: .12em;
 }
 .main-constellation .child-label {
   font-size: 15px;
@@ -2650,49 +2873,54 @@ th {
   z-index: 6;
   cursor: pointer;
   touch-action: manipulation;
+  display: block;
+  width: 360px;
+  height: 360px;
 }
 .atlas-hotspot::before {
   content: "";
   position: absolute;
   left: 50%;
   top: 50%;
-  width: 220px;
+  width: 256px;
   aspect-ratio: 1;
   transform: translate(-50%, -50%);
   border: 1px solid rgba(255,202,98,.28);
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(255,202,98,.1), transparent 64%);
+  background: radial-gradient(circle, rgba(255,202,98,.12), transparent 64%);
 }
 .atlas-hotspot::after {
   content: "";
   position: absolute;
   left: 50%;
   top: 50%;
-  width: 320px;
-  height: 260px;
+  width: 300px;
+  height: 240px;
   transform: translate(-50%, -50%);
   border-radius: 18px;
   background: transparent;
 }
 .solar-hotspot::after {
+  width: 420px;
   height: 430px;
 }
 .lyra-hotspot::after,
 .aquila-hotspot::after {
-  width: 360px;
+  width: 420px;
   height: 270px;
 }
 .atlas-label {
   position: absolute;
   left: 50%;
-  top: calc(100% + 18px);
+  top: 50%;
   min-width: 230px;
   transform: translateX(-50%);
   display: grid;
   gap: 3px;
   padding: 12px 14px;
   border: 1px solid rgba(255,255,255,.16);
-  background: rgba(4, 9, 18, .84);
+  background: linear-gradient(180deg, rgba(13, 19, 34, .94), rgba(4, 9, 18, .9));
+  box-shadow: 0 18px 42px rgba(0,0,0,.34);
   pointer-events: none;
 }
 .atlas-label em {
@@ -2716,6 +2944,10 @@ th {
 .atlas-hotspot:focus-visible .atlas-label {
   border-color: rgba(255,202,98,.5);
   color: var(--gold);
+}
+.aquila-hotspot .atlas-label {
+  top: auto;
+  bottom: calc(100% + 20px);
 }
 .mini-solar {
   position: relative;
@@ -2757,12 +2989,17 @@ th {
 .mini-solar .p4 { left: 72%; top: 67%; width: 26px; aspect-ratio: 1; background: #d0b17a; }
 .lyra-hotspot,
 .aquila-hotspot {
-  width: 38px;
-  height: 38px;
+  width: 260px;
+  height: 180px;
 }
 .lyra-hotspot::before,
 .aquila-hotspot::before {
-  width: 170px;
+  width: 260px;
+  height: 180px;
+}
+.lyra-hotspot .atlas-label,
+.aquila-hotspot .atlas-label {
+  min-width: 240px;
 }
 
 .reflection-visual-grid {
@@ -2773,7 +3010,7 @@ th {
 }
 .reflection-visual-grid figure {
   margin: 0;
-  min-height: 230px;
+  min-height: 260px;
   position: relative;
   overflow: hidden;
   border: 1px solid rgba(158,236,255,.2);
@@ -2782,7 +3019,7 @@ th {
 .reflection-visual-grid img {
   width: 100%;
   height: 100%;
-  min-height: 230px;
+  min-height: 260px;
   object-fit: cover;
 }
 .reflection-visual-grid figcaption {
@@ -2795,6 +3032,36 @@ th {
   color: #fff;
   font-weight: 900;
   background: linear-gradient(180deg, transparent, rgba(3,7,14,.92));
+}
+.reflection-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+}
+.reflection-card {
+  overflow: hidden;
+  border: 1px solid rgba(158,236,255,.2);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.075), rgba(255,255,255,.02)),
+    rgba(8, 14, 27, .78);
+}
+.reflection-card img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+}
+.reflection-card div {
+  padding: 18px;
+}
+.reflection-card strong {
+  color: #fff;
+  font-size: 20px;
+}
+.reflection-card p {
+  margin: 12px 0 0;
+  color: var(--soft);
+  font-size: 16px;
 }
 .page-atlas .star-atlas-viewport::before,
 .page-atlas .star-atlas-viewport::after {
@@ -2829,15 +3096,25 @@ th {
   34% { opacity: 0; }
   100% { transform: translate3d(80vw, 42vh, 0) rotate(24deg); opacity: 0; }
 }
+@keyframes frostCrack {
+  0%, 100% { transform: translateX(-2%) scaleX(1); opacity: .8; }
+  50% { transform: translateX(2%) scaleX(1.04); opacity: 1; }
+}
+@keyframes fireFlicker {
+  0%, 100% { opacity: .72; filter: saturate(1.1); }
+  30% { opacity: 1; filter: saturate(1.4); }
+  60% { opacity: .84; filter: saturate(1.2); }
+}
 body::marker {
   color: var(--gold);
 }
 body .meteor-layer {
   position: fixed;
   inset: 0;
-  z-index: -1;
+  z-index: 240;
   pointer-events: none;
   overflow: hidden;
+  opacity: .45;
 }
 body .meteor-layer i {
   position: absolute;
@@ -2853,10 +3130,18 @@ body .meteor-layer i:nth-child(1) { left: 2%; top: 8%; animation-delay: .2s; }
 body .meteor-layer i:nth-child(2) { left: 38%; top: 22%; animation-delay: 2.4s; }
 body .meteor-layer i:nth-child(3) { left: 70%; top: 12%; animation-delay: 4.8s; }
 body .meteor-layer i:nth-child(4) { left: 16%; top: 58%; animation-delay: 6.1s; }
+body .meteor-layer.is-active {
+  z-index: 310;
+  opacity: 1;
+}
+body .meteor-layer.is-active i {
+  animation-duration: 1.1s;
+}
 
 @media (max-width: 980px) {
   .atlas-title h1 { font-size: 44px; }
   .star-atlas-viewport { min-height: 520px; }
+  .reflection-grid,
   .reflection-visual-grid { grid-template-columns: 1fr 1fr; }
 }
 
@@ -2870,8 +3155,15 @@ body .meteor-layer i:nth-child(4) { left: 16%; top: 58%; animation-delay: 6.1s; 
   }
   .atlas-label { min-width: 190px; }
   .atlas-label strong { font-size: 22px; }
+  .reflection-grid,
   .reflection-visual-grid { grid-template-columns: 1fr; }
   .page-atlas .star-atlas-viewport::before {
+    display: none;
+  }
+  .cursor-aura {
+    display: none;
+  }
+  body .meteor-layer i:nth-child(n+3) {
     display: none;
   }
 }

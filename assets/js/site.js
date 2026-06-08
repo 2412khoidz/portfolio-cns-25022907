@@ -6,8 +6,6 @@ const scrim = document.querySelector('[data-scrim]');
 const searchButton = document.querySelector('[data-search-button]');
 const searchPopover = document.querySelector('[data-search-popover]');
 const searchInput = document.querySelector('[data-search-input]');
-const starCanvas = document.querySelector('[data-starfield]');
-const hasSolarScene = Boolean(document.querySelector('.solar-map'));
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 let pointerX = window.innerWidth * 0.5;
 let pointerY = window.innerHeight * 0.35;
@@ -19,6 +17,11 @@ document.body.prepend(progress);
 const pageTransition = document.createElement('div');
 pageTransition.className = 'page-transition';
 document.body.appendChild(pageTransition);
+
+const cursorAura = document.createElement('div');
+cursorAura.className = 'cursor-aura';
+cursorAura.setAttribute('aria-hidden', 'true');
+document.body.appendChild(cursorAura);
 
 const meteorLayer = document.createElement('div');
 meteorLayer.className = 'meteor-layer';
@@ -39,24 +42,26 @@ function setPointerVars(x, y) {
 
 setPointerVars(pointerX, pointerY);
 
-if (document.body.classList.contains('page-atlas')) {
-  let pendingPointerEvent = null;
-  let pointerFrame = 0;
+const enablePointerFx = !reduceMotion && window.matchMedia('(pointer: fine)').matches;
+let pendingPointerEvent = null;
+let pointerFrame = 0;
 
+if (enablePointerFx) {
   document.addEventListener('pointermove', (event) => {
     pendingPointerEvent = event;
     if (pointerFrame) return;
     pointerFrame = requestAnimationFrame(() => {
       pointerFrame = 0;
-      if (pendingPointerEvent) {
-        setPointerVars(pendingPointerEvent.clientX, pendingPointerEvent.clientY);
+      if (!pendingPointerEvent) return;
+      pointerX = pendingPointerEvent.clientX;
+      pointerY = pendingPointerEvent.clientY;
+      cursorAura.classList.add('is-active');
+      cursorAura.style.transform = `translate3d(${pointerX}px, ${pointerY}px, 0) translate(-50%, -50%)`;
+      if (document.body.classList.contains('page-atlas')) {
+        setPointerVars(pointerX, pointerY);
       }
     });
   }, { passive: true });
-}
-
-if (starCanvas) {
-  starCanvas.remove();
 }
 
 function setPageState() {
@@ -164,27 +169,11 @@ const observer = new IntersectionObserver((entries) => {
 
 document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
 
-document.querySelectorAll('.solar-map:not(.solar-map-3d)').forEach((map) => {
-  map.addEventListener('pointermove', (event) => {
-    const rect = map.getBoundingClientRect();
-    const x = ((event.clientX - rect.left) / Math.max(rect.width, 1) - 0.5) * 14;
-    const y = ((event.clientY - rect.top) / Math.max(rect.height, 1) - 0.5) * 10;
-    map.style.setProperty('--solar-tilt-x', `${y}deg`);
-    map.style.setProperty('--solar-tilt-y', `${-x}deg`);
-    map.style.setProperty('--solar-light-x', `${event.clientX - rect.left}px`);
-    map.style.setProperty('--solar-light-y', `${event.clientY - rect.top}px`);
-  }, { passive: true });
-  map.addEventListener('pointerleave', () => {
-    map.style.setProperty('--solar-tilt-x', '0deg');
-    map.style.setProperty('--solar-tilt-y', '0deg');
-  });
-});
-
 const atlasViewport = document.querySelector('[data-star-atlas]');
 const atlasMap = document.querySelector('[data-star-atlas-map]');
 
 if (atlasViewport && atlasMap) {
-  let atlasX = window.innerWidth <= 700 ? -560 : -300;
+  let atlasX = window.innerWidth <= 700 ? -640 : -300;
   let atlasY = window.innerWidth <= 700 ? -170 : -190;
   let startX = 0;
   let startY = 0;
@@ -208,6 +197,7 @@ if (atlasViewport && atlasMap) {
   atlasViewport.addEventListener('pointerdown', (event) => {
     if (event.button !== 0) return;
     if (event.target.closest('.atlas-hotspot')) return;
+    if (event.target.closest('.atlas-label')) return;
     dragging = true;
     moved = false;
     startX = event.clientX;
@@ -236,7 +226,7 @@ if (atlasViewport && atlasMap) {
     suppressClick = moved;
     window.setTimeout(() => {
       suppressClick = false;
-    }, 80);
+    }, 140);
   }
 
   atlasViewport.addEventListener('pointerup', endAtlasDrag);
@@ -250,52 +240,88 @@ if (atlasViewport && atlasMap) {
     if (suppressClick) {
       event.preventDefault();
       event.stopPropagation();
+      moved = false;
+      return;
     }
     moved = false;
   }, true);
+  document.querySelectorAll('.atlas-hotspot').forEach((hotspot) => {
+    let downX = 0;
+    let downY = 0;
+
+    hotspot.addEventListener('pointerdown', (event) => {
+      downX = event.clientX;
+      downY = event.clientY;
+    });
+
+    hotspot.addEventListener('pointerup', (event) => {
+      if (suppressClick) return;
+      const isWideLabel = hotspot.classList.contains('lyra-hotspot') || hotspot.classList.contains('aquila-hotspot');
+      const movedOnLink = Math.abs(event.clientX - downX) + Math.abs(event.clientY - downY) > (isWideLabel ? 28 : 12);
+      if (movedOnLink) return;
+      event.preventDefault();
+      event.stopPropagation();
+      const href = hotspot.getAttribute('href');
+      if (!href) return;
+      goWithTransition(new URL(href, location.href), hotspot);
+    });
+  });
   window.addEventListener('resize', clampAtlas);
   clampAtlas();
 }
 
-document.querySelectorAll('.atlas-hotspot').forEach((hotspot) => {
-  let downX = 0;
-  let downY = 0;
-
-  hotspot.addEventListener('pointerdown', (event) => {
-    downX = event.clientX;
-    downY = event.clientY;
-  });
-
-  hotspot.addEventListener('pointerup', (event) => {
-    const movedOnLink = Math.abs(event.clientX - downX) + Math.abs(event.clientY - downY) > 10;
-    if (movedOnLink) return;
-    event.preventDefault();
-    const href = hotspot.getAttribute('href');
-    if (!href) return;
-    goWithTransition(new URL(href, location.href));
-  });
-});
-
 document.addEventListener('click', (event) => {
   const link = event.target.closest('a[href]');
-  if (!link || event.defaultPrevented) return;
+  if (!link || event.defaultPrevented || link.classList.contains('atlas-hotspot')) return;
   const href = link.getAttribute('href');
   if (!href || href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('tel:') || link.target) return;
   const url = new URL(href, location.href);
   if (url.origin !== location.origin || url.pathname === location.pathname && url.hash) return;
   event.preventDefault();
-  goWithTransition(url);
+  goWithTransition(url, link);
 });
 
-function goWithTransition(url) {
-  pageTransition.classList.remove('transition-up', 'transition-diagonal');
+function goWithTransition(url, sourceLink) {
+  const transitionClasses = [
+    'transition-left',
+    'transition-right',
+    'transition-up',
+    'transition-down',
+    'transition-diagonal',
+    'transition-burst',
+    'transition-frost',
+    'transition-fire',
+    'transition-meteor'
+  ];
+  pageTransition.classList.remove(...transitionClasses);
+  meteorLayer.classList.remove('is-active');
   const path = url.pathname.toLowerCase();
-  const variant = path.includes('about') ? 'transition-up' : path.includes('conclusion') ? 'transition-diagonal' : '';
-  if (variant) pageTransition.classList.add(variant);
+  let variant = '';
+
+  if (reduceMotion) {
+    location.href = url.href;
+    return;
+  }
+
+  if (sourceLink?.classList.contains('solar-hotspot') || path.includes('projects')) {
+    variant = 'transition-meteor';
+  } else if (sourceLink?.classList.contains('lyra-hotspot') || path.includes('about')) {
+    variant = 'transition-up';
+  } else if (sourceLink?.classList.contains('aquila-hotspot') || path.includes('conclusion')) {
+    variant = 'transition-diagonal';
+  } else {
+    const variants = ['transition-left', 'transition-right', 'transition-up', 'transition-down', 'transition-diagonal', 'transition-burst', 'transition-frost', 'transition-fire'];
+    variant = variants[Math.floor(Math.random() * variants.length)];
+  }
+
+  pageTransition.classList.add(variant);
+  if (variant === 'transition-meteor') {
+    meteorLayer.classList.add('is-active');
+  }
   pageTransition.classList.add('is-active');
   window.setTimeout(() => {
     location.href = url.href;
-  }, 220);
+  }, 430);
 }
 
 const lightbox = document.createElement('div');

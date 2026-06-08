@@ -1,0 +1,460 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Portfolio CNS 25022907 - Bản PDF full dự án</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #172033;
+      --muted: #586579;
+      --line: #d8dfeb;
+      --navy: #07111f;
+      --blue: #0b5fa5;
+      --gold: #f4b84d;
+      --paper: #ffffff;
+      --soft: #f3f6fb;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: #dfe7f3;
+      color: var(--ink);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.55;
+    }
+
+    a { color: var(--blue); text-decoration: none; }
+
+    .page {
+      width: 210mm;
+      min-height: 297mm;
+      margin: 0 auto 14mm;
+      padding: 18mm;
+      background: var(--paper);
+      box-shadow: 0 18px 45px rgba(20, 35, 60, .18);
+      page-break-after: always;
+    }
+
+    .page:last-child { page-break-after: auto; }
+
+    .cover {
+      padding: 0;
+      overflow: hidden;
+      background: #07111f;
+      color: #fff;
+      display: grid;
+      grid-template-rows: 1fr auto;
+      position: relative;
+    }
+
+    .cover::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(90deg, rgba(7, 17, 31, .95), rgba(7, 17, 31, .52), rgba(7, 17, 31, .92)),
+        url("assets/backgrounds/projects.jpg") center/cover no-repeat;
+      opacity: .95;
+    }
+
+    .cover-inner {
+      position: relative;
+      z-index: 1;
+      padding: 22mm 18mm 12mm;
+      display: grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 14mm;
+      align-items: center;
+      min-height: 230mm;
+    }
+
+    .logo-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 22mm;
+      color: #cfe6ff;
+      font-size: 12px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    .logo-row img {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: #fff;
+      padding: 4px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 44px;
+      line-height: .98;
+      letter-spacing: .02em;
+      text-transform: uppercase;
+    }
+
+    .cover h1 span {
+      display: block;
+      color: var(--gold);
+      margin-top: 8px;
+      font-size: 30px;
+    }
+
+    .cover .lead {
+      margin-top: 22px;
+      max-width: 128mm;
+      color: #dbe7f6;
+      font-size: 16px;
+    }
+
+    .student-card {
+      border: 1px solid rgba(255,255,255,.18);
+      background: rgba(4, 9, 17, .68);
+      padding: 18px;
+    }
+
+    .student-card img {
+      width: 100%;
+      aspect-ratio: 4 / 5;
+      object-fit: cover;
+      object-position: center 35%;
+      border: 1px solid rgba(255,255,255,.18);
+      margin-bottom: 16px;
+    }
+
+    .student-card p {
+      margin: 8px 0;
+      color: #ecf5ff;
+      font-size: 13px;
+    }
+
+    .cover-footer {
+      position: relative;
+      z-index: 1;
+      padding: 9mm 18mm 15mm;
+      border-top: 1px solid rgba(255,255,255,.16);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      color: #d9e8fa;
+      font-size: 13px;
+    }
+
+    .cover-footer strong { color: #fff; }
+
+    .section-title {
+      margin: 0 0 12px;
+      color: #0d2239;
+      font-size: 25px;
+      line-height: 1.16;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+    }
+
+    .section-kicker {
+      margin: 0 0 6px;
+      color: var(--gold);
+      font-weight: 800;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      font-size: 11px;
+    }
+
+    .note {
+      color: var(--muted);
+      margin: 0 0 18px;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin: 16px 0 22px;
+    }
+
+    .info-box {
+      border: 1px solid var(--line);
+      background: var(--soft);
+      padding: 12px;
+    }
+
+    .info-box strong {
+      display: block;
+      margin-bottom: 4px;
+      color: #0f2944;
+    }
+
+    .atlas-strip {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 10px;
+      margin: 18px 0 24px;
+    }
+
+    .atlas-card {
+      min-height: 94px;
+      padding: 14px;
+      color: #fff;
+      background:
+        linear-gradient(180deg, rgba(7, 17, 31, .62), rgba(7, 17, 31, .98)),
+        url("assets/planets/2k_stars_milky_way.jpg") center/cover no-repeat;
+      border: 1px solid #1f3650;
+    }
+
+    .atlas-card strong {
+      display: block;
+      color: var(--gold);
+      font-size: 18px;
+      text-transform: uppercase;
+    }
+
+    .atlas-card span {
+      display: block;
+      margin-top: 6px;
+      color: #dbe9fb;
+      font-size: 12px;
+    }
+
+    .project-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    .project {
+      border: 1px solid var(--line);
+      background: #fff;
+      display: grid;
+      grid-template-columns: 76px 1fr;
+      min-height: 128px;
+      overflow: hidden;
+    }
+
+    .project img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .project div { padding: 10px 11px; }
+
+    .project b {
+      display: block;
+      margin-bottom: 5px;
+      color: #102846;
+      font-size: 14px;
+      line-height: 1.25;
+    }
+
+    .project p {
+      margin: 0;
+      color: #4c5b70;
+      font-size: 12px;
+    }
+
+    .wide-figure {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin: 18px 0;
+    }
+
+    .wide-figure img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      border: 1px solid var(--line);
+    }
+
+    .reflection-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .reflection {
+      border: 1px solid var(--line);
+      background: var(--soft);
+      overflow: hidden;
+    }
+
+    .reflection img {
+      width: 100%;
+      aspect-ratio: 16 / 8;
+      object-fit: cover;
+      display: block;
+    }
+
+    .reflection div { padding: 12px; }
+
+    .reflection strong {
+      color: #102846;
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .reflection p {
+      margin: 0;
+      color: #4e5e73;
+      font-size: 13px;
+    }
+
+    .checklist {
+      margin: 18px 0 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 9px;
+    }
+
+    .checklist li {
+      padding: 10px 12px;
+      border-left: 4px solid var(--gold);
+      background: var(--soft);
+    }
+
+    .footer-note {
+      margin-top: 18px;
+      padding-top: 12px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    @page {
+      size: A4;
+      margin: 0;
+    }
+
+    @media print {
+      body { background: #fff; }
+      .page {
+        margin: 0;
+        width: auto;
+        min-height: 297mm;
+        box-shadow: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <section class="page cover">
+    <div class="cover-inner">
+      <div>
+        <div class="logo-row">
+          <img src="assets/images/uet-logo.png" alt="Logo UET">
+          <span>VNU - University of Engineering and Technology</span>
+        </div>
+        <h1>Portfolio học tập <span>Nhập môn công nghệ số và AI</span></h1>
+        <p class="lead">Bản PDF full toàn bộ dự án, sắp xếp theo đúng thứ tự các trang, bài tập và phần tự nhận xét sau học phần.</p>
+      </div>
+      <aside class="student-card">
+        <img src="assets/images/profile-main.jpg" alt="Ảnh sinh viên Nguyễn Hoàng Minh Khôi">
+        <p><strong>Họ và tên:</strong> Nguyễn Hoàng Minh Khôi</p>
+        <p><strong>MSSV:</strong> 25022907</p>
+        <p><strong>Ngành học:</strong> Trí tuệ nhân tạo</p>
+        <p><strong>Trường:</strong> Đại học Công nghệ - ĐHQGHN</p>
+      </aside>
+    </div>
+    <div class="cover-footer">
+      <div><strong>Website:</strong><br><a href="https://portfolio-cns-25022907.netlify.app/">https://portfolio-cns-25022907.netlify.app/</a></div>
+      <div><strong>File PDF:</strong><br><a href="https://portfolio-cns-25022907.netlify.app/assets/docs/portfolio-CNS-25022907-full.pdf">portfolio-CNS-25022907-full.pdf</a></div>
+    </div>
+  </section>
+
+  <section class="page">
+    <p class="section-kicker">Tổng quan sản phẩm</p>
+    <h2 class="section-title">Cấu trúc portfolio</h2>
+    <p class="note">Website được thiết kế theo chủ đề bản đồ sao. Trang Home là một atlas 2D có thể kéo, trong đó ba cụm nổi bật dẫn đến ba phần chính của portfolio.</p>
+    <div class="atlas-strip">
+      <div class="atlas-card"><strong>Projects</strong><span>Cụm Hệ Mặt Trời, mỗi hành tinh tương ứng một bài tập.</span></div>
+      <div class="atlas-card"><strong>About me</strong><span>Lyra / Vega / Chức Nữ, dẫn đến phần giới thiệu cá nhân.</span></div>
+      <div class="atlas-card"><strong>Conclusion</strong><span>Aquila / Altair / Ngưu Lang, dẫn đến phần tổng kết học phần.</span></div>
+    </div>
+    <div class="info-grid">
+      <div class="info-box"><strong>Mục tiêu</strong>Trình bày lại các sản phẩm học tập theo hướng rõ ràng, có minh họa và dễ điều hướng.</div>
+      <div class="info-box"><strong>Điểm nhấn</strong>Home dạng bản đồ sao, Projects dạng Hệ Mặt Trời 3D, các bài chi tiết có ảnh chèn theo nội dung.</div>
+      <div class="info-box"><strong>Phạm vi</strong>7 bài tập học phần, phần giới thiệu cá nhân, phần tổng kết và định hướng tiếp theo.</div>
+      <div class="info-box"><strong>Hình thức nộp</strong>URL website công khai và file PDF lưu trữ sản phẩm.</div>
+    </div>
+    <div class="wide-figure">
+      <img src="assets/backgrounds/projects.jpg" alt="Ảnh minh họa không gian của trang Projects">
+      <img src="assets/images/profile-secondary.jpg" alt="Ảnh sinh viên trong hoạt động học tập">
+    </div>
+      <p class="footer-note">Bản PDF này là bản full của toàn bộ dự án, dùng để lưu hồ sơ và đối chiếu với website đã deploy.</p>
+  </section>
+
+  <section class="page">
+    <p class="section-kicker">Danh mục bài tập</p>
+    <h2 class="section-title">7 sản phẩm học phần</h2>
+    <p class="note">Mỗi bài có trang riêng trên website, kèm phần mô tả, hình minh họa và liên kết tài liệu gốc nếu có.</p>
+    <div class="project-grid">
+      <article class="project">
+        <img src="assets/backgrounds/bai1.jpg" alt="">
+        <div><b>Bài 1 - Thao tác với tệp tin và thư mục</b><p>Thực hành tạo, sao chép, di chuyển, xóa và khôi phục tệp; củng cố cách tổ chức dữ liệu cá nhân.</p></div>
+      </article>
+      <article class="project">
+        <img src="assets/images/bai2-extra2.jpg" alt="">
+        <div><b>Bài 2 - Tìm kiếm và đánh giá thông tin học thuật</b><p>Tìm tài liệu về Deep Learning trong phát hiện sớm ung thư, đánh giá nguồn và trình bày theo định dạng học thuật.</p></div>
+      </article>
+      <article class="project">
+        <img src="assets/images/bai3-image1.png" alt="">
+        <div><b>Bài 3 - Viết prompt hiệu quả</b><p>So sánh prompt cơ bản, cải tiến và nâng cao cho các nhiệm vụ học tập như tóm tắt, giải thích và ôn tập.</p></div>
+      </article>
+      <article class="project">
+        <img src="assets/images/bai4-image1.png" alt="">
+        <div><b>Bài 4 - Hợp tác trực tuyến</b><p>Trải nghiệm Trello, Google Docs, Google Drive và Zalo trong quản lý công việc nhóm.</p></div>
+      </article>
+      <article class="project">
+        <img src="assets/images/bai5-image1.png" alt="">
+        <div><b>Bài 5 - AI hỗ trợ sáng tạo nội dung</b><p>Dùng công cụ AI để xây dựng ý tưởng, hình ảnh và infographic về AI trong nông nghiệp thông minh.</p></div>
+      </article>
+      <article class="project">
+        <img src="assets/images/bai6-extra1.jpg" alt="">
+        <div><b>Bài 6 - AI có trách nhiệm</b><p>Xây dựng nguyên tắc dùng AI minh bạch, kiểm chứng thông tin và bảo vệ liêm chính học thuật.</p></div>
+      </article>
+      <article class="project">
+        <img src="assets/images/bai7-extra2.jpg" alt="">
+        <div><b>Bài 7 - Phân tích tài liệu với AI</b><p>Sử dụng trợ lý nghiên cứu để đọc, lọc và tổng hợp tài liệu khoa học về Deep Learning trong y khoa.</p></div>
+      </article>
+    </div>
+  </section>
+
+  <section class="page">
+    <p class="section-kicker">Tự nhận xét</p>
+    <h2 class="section-title">Những kỹ năng đã rèn luyện</h2>
+    <p class="note">Qua quá trình làm portfolio, tôi không chỉ hoàn thành từng bài riêng lẻ mà còn học cách biến các sản phẩm rời rạc thành một hồ sơ học tập có cấu trúc.</p>
+    <div class="reflection-grid">
+      <article class="reflection">
+        <img src="assets/backgrounds/bai1.jpg" alt="">
+        <div><strong>Tổ chức thông tin</strong><p>Biết sắp xếp tệp, tài liệu và hình ảnh theo thư mục rõ ràng để dễ kiểm tra và cập nhật.</p></div>
+      </article>
+      <article class="reflection">
+        <img src="assets/images/bai2-extra3.jpg" alt="">
+        <div><strong>Tìm kiếm học thuật</strong><p>Biết kết hợp từ khóa, Boolean và nhiều cơ sở dữ liệu để tìm nguồn phù hợp với chủ đề.</p></div>
+      </article>
+      <article class="reflection">
+        <img src="assets/images/bai6-extra4.jpg" alt="">
+        <div><strong>Làm việc với AI</strong><p>Biết dùng AI như công cụ hỗ trợ, đồng thời vẫn kiểm chứng và tự chịu trách nhiệm với kết quả cuối cùng.</p></div>
+      </article>
+      <article class="reflection">
+        <img src="assets/images/bai5-image1.png" alt="">
+        <div><strong>Trình bày sản phẩm số</strong><p>Biết thiết kế bố cục, thêm hình minh họa đúng chỗ và tạo trải nghiệm điều hướng mạch lạc.</p></div>
+      </article>
+    </div>
+    <ul class="checklist">
+      <li>Tiếp tục rèn thói quen trích dẫn, kiểm chứng nguồn và bảo vệ dữ liệu cá nhân khi dùng công cụ số.</li>
+      <li>Ứng dụng AI vào học tập theo hướng trợ lý nghiên cứu, không dùng để thay thế hoàn toàn tư duy của bản thân.</li>
+      <li>Phát triển portfolio như hồ sơ học tập có thể cập nhật trong các học phần tiếp theo.</li>
+    </ul>
+    <p class="footer-note">Nguyễn Hoàng Minh Khôi - MSSV 25022907 - Trí tuệ nhân tạo, Đại học Công nghệ - ĐHQGHN.</p>
+  </section>
+</body>
+</html>
